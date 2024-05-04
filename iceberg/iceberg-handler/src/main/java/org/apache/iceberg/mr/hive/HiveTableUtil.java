@@ -21,6 +21,7 @@ package org.apache.iceberg.mr.hive;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.pixee.security.ObjectInputFilters;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -270,6 +271,7 @@ public class HiveTableUtil {
 
     try (FileIO io = new HadoopFileIO(config)) {
       try (ObjectInputStream ois = new ObjectInputStream(io.newInputFile(filePath).newStream())) {
+        ObjectInputFilters.enableObjectFilterIfUnprotected(ois);
         return SerializationUtil.deserializeFromBase64((String) ois.readObject());
       }
     } catch (ClassNotFoundException | IOException e) {

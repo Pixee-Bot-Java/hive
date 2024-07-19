@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -3974,7 +3975,7 @@ public class GenVectorCode extends Task {
   }
 
   static void writeFile(File outputFile, String str) throws IOException {
-    BufferedWriter w = new BufferedWriter(new FileWriter(outputFile));
+    BufferedWriter w = Files.newBufferedWriter(outputFile.toPath());
     w.write(str);
     w.close();
   }

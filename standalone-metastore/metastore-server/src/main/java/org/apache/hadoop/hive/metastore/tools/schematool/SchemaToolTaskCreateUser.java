@@ -17,6 +17,7 @@
  */
 package org.apache.hadoop.hive.metastore.tools.schematool;
 
+import java.nio.file.Files;
 import org.apache.hadoop.hive.metastore.HiveMetaException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,7 +65,7 @@ public class SchemaToolTaskCreateUser extends SchemaToolTask {
 
   private File subUserAndPassword(String parent, String filename) throws IOException {
     File createFile = File.createTempFile("create-hive-user-" + schemaTool.getDbType(), ".sql");
-    BufferedWriter writer = new BufferedWriter(new FileWriter(createFile));
+    BufferedWriter writer = Files.newBufferedWriter(createFile.toPath());
     File proto = new File(parent, filename);
     BufferedReader reader = new BufferedReader(new FileReader(proto));
     reader.lines()

@@ -18,6 +18,7 @@
 
 package org.apache.hadoop.hive.common;
 
+import java.nio.file.Files;
 import static org.apache.hadoop.hive.shims.Utils.RAW_RESERVED_VIRTUAL_PATH;
 
 import java.io.EOFException;
@@ -1139,7 +1140,7 @@ public final class FileUtils {
             + lScratchDir);
       }
     }
-    File tmpFile = File.createTempFile(prefix, suffix, tmpDir);
+    File tmpFile = Files.createTempFile(tmpDir.toPath(), prefix, suffix).toFile();
     ShutdownHookManager.deleteOnExit(tmpFile);
     return tmpFile;
   }
@@ -1163,7 +1164,7 @@ public final class FileUtils {
       return createFileInTmp(prefix, suffix, "Cannot access or create " + targetDir, isDirectory);
     }
     try {
-      File file = File.createTempFile(prefix, suffix, targetDir);
+      File file = Files.createTempFile(targetDir.toPath(), prefix, suffix).toFile();
       if (isDirectory && (!file.delete() || !file.mkdirs())) {
         // TODO: or we could just generate a name ourselves and not do this?
         return createFileInTmp(prefix, suffix,
@@ -1179,7 +1180,7 @@ public final class FileUtils {
 
   private static File createFileInTmp(String prefix, String suffix,
       String reason, boolean isDirectory) throws IOException {
-    File file = File.createTempFile(prefix, suffix);
+    File file = Files.createTempFile(prefix, suffix).toFile();
     if (isDirectory && (!file.delete() || !file.mkdirs())) {
       // TODO: or we could just generate a name ourselves and not do this?
       throw new IOException("Cannot recreate " + file + " as directory");

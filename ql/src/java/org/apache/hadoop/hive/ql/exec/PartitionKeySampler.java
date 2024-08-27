@@ -18,6 +18,7 @@
 package org.apache.hadoop.hive.ql.exec;
 
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -148,7 +149,7 @@ public class PartitionKeySampler implements OutputCollector<HiveKey, Object> {
 
     private int sampleNum = 1000;
     private float samplePercent = 0.1f;
-    private final Random random = new Random();
+    private final Random random = new SecureRandom();
 
     private int sampled;
 

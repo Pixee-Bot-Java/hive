@@ -18,6 +18,7 @@
 
 package org.apache.hadoop.hive.common;
 
+import java.security.SecureRandom;
 import static org.apache.hadoop.hive.shims.Utils.RAW_RESERVED_VIRTUAL_PATH;
 
 import java.io.EOFException;
@@ -84,7 +85,7 @@ import javax.security.auth.login.LoginException;
  */
 public final class FileUtils {
   private static final Logger LOG = LoggerFactory.getLogger(FileUtils.class.getName());
-  private static final Random random = new Random();
+  private static final Random random = new SecureRandom();
   public static final int IO_ERROR_SLEEP_TIME = 100;
 
   public static final PathFilter HIDDEN_FILES_PATH_FILTER = new PathFilter() {

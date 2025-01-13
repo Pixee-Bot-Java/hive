@@ -21,6 +21,7 @@ package org.apache.hadoop.hive.ql.history;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -51,7 +52,7 @@ public class HiveHistoryImpl implements HiveHistory{
 
   String histFileName; // History file name
 
-  private static final Random randGen = new Random();
+  private static final Random randGen = new SecureRandom();
 
   private LogHelper console;
 

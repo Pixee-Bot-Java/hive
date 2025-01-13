@@ -18,6 +18,7 @@
 
 package org.apache.hadoop.hive.ql.exec.vector.mapjoin.fast;
 
+import java.security.SecureRandom;
 import org.apache.hadoop.hive.ql.exec.persistence.MatchTracker;
 import org.apache.hadoop.hive.ql.exec.vector.VectorRandomRowSource;
 import org.apache.hadoop.hive.ql.exec.vector.mapjoin.hashtable.VectorMapJoinHashMapResult;
@@ -118,7 +119,7 @@ public class TestVectorMapJoinFastHashMapContainerNonMatched {
 
   @Test
   public void testLongHashMapContainer() throws Exception {
-    Random random = new Random();
+    Random random = new SecureRandom();
     long keyA = random.nextLong();
     while ((HashCodeUtil.calculateLongHashCode(keyA) & (initialCapacity - 1)) != 0) {
       keyA = random.nextLong();
@@ -179,7 +180,7 @@ public class TestVectorMapJoinFastHashMapContainerNonMatched {
 
   @Test
   public void testStringHashMapContainer() throws Exception {
-    Random random = new Random();
+    Random random = new SecureRandom();
 
     String keyA = VectorRandomRowSource.getRandString(random, 5, false);
     while ((getHashCode(keyA) & (initialCapacity - 1)) != 0) {
@@ -247,7 +248,7 @@ public class TestVectorMapJoinFastHashMapContainerNonMatched {
 
   @Test
   public void testMultiKeyHashMapContainer() throws Exception {
-    Random random = new Random();
+    Random random = new SecureRandom();
     BinarySortableSerializeWrite serializeWrite =
         BinarySortableSerializeWrite.with(new Properties(), 2);
 

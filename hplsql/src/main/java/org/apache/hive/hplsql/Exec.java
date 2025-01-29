@@ -18,6 +18,7 @@
  
 package org.apache.hive.hplsql;
 
+import io.github.pixee.security.SystemCommand;
 import static java.util.Collections.singletonList;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.apache.hive.hplsql.objects.MethodDictionary.__GETITEM__;
@@ -2289,7 +2290,7 @@ public class Exec extends HplsqlBaseVisitor<Integer> implements Closeable {
         trace(ctx, "HIVE Parameters: " + Utils.toString(cmdarr, ' '));      
       }     
       if (!offline) {
-        Process p = Runtime.getRuntime().exec(cmdarr);      
+        Process p = SystemCommand.runCommand(Runtime.getRuntime(), cmdarr);      
         new StreamGobbler(p.getInputStream(), console).start();
         new StreamGobbler(p.getErrorStream(), console).start();
         int rc = p.waitFor();      
@@ -2351,7 +2352,7 @@ public class Exec extends HplsqlBaseVisitor<Integer> implements Closeable {
       if (trace) {
         trace(ctx, "HOST Command: " + cmd);      
       } 
-      Process p = Runtime.getRuntime().exec(cmd);      
+      Process p = SystemCommand.runCommand(Runtime.getRuntime(), cmd);      
       new StreamGobbler(p.getInputStream(), console).start();
       new StreamGobbler(p.getErrorStream(), console).start();
       int rc = p.waitFor();      

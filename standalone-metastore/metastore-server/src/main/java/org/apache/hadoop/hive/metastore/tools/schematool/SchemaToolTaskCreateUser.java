@@ -64,7 +64,7 @@ public class SchemaToolTaskCreateUser extends SchemaToolTask {
   }
 
   private File subUserAndPassword(String parent, String filename) throws IOException {
-    File createFile = File.createTempFile("create-hive-user-" + schemaTool.getDbType(), ".sql");
+    File createFile = Files.createTempFile("create-hive-user-" + schemaTool.getDbType(), ".sql").toFile();
     BufferedWriter writer = Files.newBufferedWriter(createFile.toPath());
     File proto = new File(parent, filename);
     BufferedReader reader = new BufferedReader(new FileReader(proto));

@@ -19,6 +19,7 @@ package org.apache.hadoop.hive.common.metrics.metrics2;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.nio.file.Files;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.CommonConfigurationKeysPublic;
 import org.apache.hadoop.hive.common.metrics.MetricsTestUtils;
@@ -160,7 +161,7 @@ public class TestCodahaleReportersConf {
   public void testMetricsFactoryInitMetrics2ReporterAddedTwice() throws Exception {
     Configuration conf = new Configuration();
 
-    jsonReportFile = File.createTempFile("TestCodahaleMetrics", ".json");
+    jsonReportFile = Files.createTempFile("TestCodahaleMetrics", ".json").toFile();
     LOGGER.info("Json metrics saved in {}", jsonReportFile.getAbsolutePath());
 
     conf.set(MetastoreConf.ConfVars.METRICS_CLASS.getHiveName(), CodahaleMetrics.class.getCanonicalName());

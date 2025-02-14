@@ -104,7 +104,7 @@ class KafkaBrokerResource extends ExternalResource {
           principal, keytab, principal + "/localhost");
       brokerProps.setProperty("listener.name.l2.gssapi.sasl.jaas.config", jaasConfig);
       brokerProps.setProperty("listener.name.l3.gssapi.sasl.jaas.config", jaasConfig);
-      truststoreFile = File.createTempFile("kafka_truststore", "jks");
+      truststoreFile = Files.createTempFile("kafka_truststore", "jks").toFile();
       brokerProps.putAll(new TestSslUtils.SslConfigsBuilder(Mode.SERVER).createNewTrustStore(truststoreFile).build());
       brokerProps.setProperty("delegation.token.master.key", "AnyValueShouldDoHereItDoesntMatter");
     }

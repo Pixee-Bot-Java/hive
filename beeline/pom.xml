@@ -196,6 +196,10 @@
       <artifactId>postgresql</artifactId>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>io.github.pixee</groupId>
+      <artifactId>java-security-toolkit</artifactId>
+    </dependency>
   </dependencies>
   <profiles>
     <profile>

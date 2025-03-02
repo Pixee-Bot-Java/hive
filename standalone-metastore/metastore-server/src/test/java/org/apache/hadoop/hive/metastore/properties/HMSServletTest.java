@@ -18,6 +18,7 @@ package org.apache.hadoop.hive.metastore.properties;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import io.github.pixee.security.BoundedLineReader;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hive.metastore.PropertyServlet;
 import org.apache.hadoop.hive.metastore.utils.MetaStoreUtils;
@@ -213,7 +214,7 @@ public class HMSServletTest extends HMSTestBase {
     BufferedReader in = new BufferedReader(reader);
     String line = null;
     StringBuilder rslt = new StringBuilder();
-    while ((line = in.readLine()) != null) {
+    while ((line = BoundedLineReader.readLine(in, 5_000_000)) != null) {
       rslt.append(line);
     }
     return rslt.toString();

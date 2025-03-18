@@ -18,6 +18,8 @@ package org.apache.hadoop.hive.metastore.properties;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hive.metastore.PropertyServlet;
 import org.apache.hadoop.hive.metastore.utils.MetaStoreUtils;
@@ -83,7 +85,7 @@ public class HMSServletTest extends HMSTestBase {
 
   @Override
   protected PropertyClient createClient(Configuration conf, int sport) throws Exception {
-    URL url = new URL("http://hive@localhost:" + sport + "/" + CLI + "/" + NS);
+    URL url = Urls.create("http://hive@localhost:" + sport + "/" + CLI + "/" + NS, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
     String jwt = generateJWT();
     return new JSonClient(jwt, url);
   }
@@ -143,7 +145,7 @@ public class HMSServletTest extends HMSTestBase {
 
   @Test
   public void testServletEchoA() throws Exception {
-    URL url = new URL("http://hive@localhost:" + sport + "/" + CLI + "/" + NS);
+    URL url = Urls.create("http://hive@localhost:" + sport + "/" + CLI + "/" + NS, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
     Map<String, String> json = Collections.singletonMap("method", "echo");
     String jwt = generateJWT();
     // succeed

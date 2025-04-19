@@ -17,6 +17,7 @@
  */
 package org.apache.hadoop.hive.metastore.properties;
 
+import io.github.pixee.security.ObjectInputFilters;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -153,6 +154,7 @@ public class PocExternalTest {
         byte[] data = baos.toByteArray();
 
         ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(data));
+        ObjectInputFilters.enableObjectFilterIfUnprotected(in);
         PocExternal poci = (PocExternal) in.readObject();
 
         Assert.assertEquals(poc.getString(), poci.getString());
@@ -183,6 +185,7 @@ public class PocExternalTest {
         byte[] data = baos.toByteArray();
 
         ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(data));
+        ObjectInputFilters.enableObjectFilterIfUnprotected(in);
         PocExternal poci = (PocExternal) in.readObject();
 
         Assert.assertEquals("fOurty-twO", poci.getString());
@@ -200,6 +203,7 @@ public class PocExternalTest {
         out.writeObject(pocx);
         byte[] data = baos.toByteArray();
         ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(data));
+        ObjectInputFilters.enableObjectFilterIfUnprotected(in);
         Poc3 poc3 = (Poc3) in.readObject();
         Assert.assertEquals("other42", poc3.getOther());
 

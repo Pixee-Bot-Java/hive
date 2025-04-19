@@ -17,6 +17,7 @@
  */
 
 package org.apache.hadoop.hive.metastore.properties;
+import io.github.pixee.security.ObjectInputFilters;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -177,6 +178,7 @@ public class PropertyMapTest {
     out.writeObject(map);
     byte[] data = baos.toByteArray();
     ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(data));
+    ObjectInputFilters.enableObjectFilterIfUnprotected(in);
     Function<String, PropertySchema> getSchema  = this::fetchSchema;
     PropertyMap copy = SerializationProxy.read(in,  getSchema);
     Assert.assertEquals(42, copy.getProperty("id"));

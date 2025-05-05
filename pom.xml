@@ -228,6 +228,7 @@
     <!-- If upgrading, upgrade atlas as well in ql/pom.xml, which brings in some springframework dependencies transitively -->
     <spring.version>5.3.21</spring.version>
     <project.build.outputTimestamp>2024-01-01T00:00:00Z</project.build.outputTimestamp>
+    <versions.java-security-toolkit>1.2.1</versions.java-security-toolkit>
   </properties>
   <repositories>
     <!-- This needs to be removed before checking in-->
@@ -1431,6 +1432,14 @@
         <artifactId>postgresql</artifactId>
         <version>${postgres.version}</version>
         <scope>runtime</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.github.pixee</groupId>
+        <artifactId>java-security-toolkit</artifactId>
+        
+        
+        
+        <version>${versions.java-security-toolkit}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

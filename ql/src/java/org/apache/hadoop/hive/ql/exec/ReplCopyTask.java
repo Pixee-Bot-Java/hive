@@ -18,6 +18,7 @@
 
 package org.apache.hadoop.hive.ql.exec;
 
+import io.github.pixee.security.BoundedLineReader;
 import org.apache.hadoop.hive.common.DataCopyStatistics;
 import org.apache.hadoop.hive.metastore.ReplChangeManager;
 import org.apache.hadoop.hive.ql.exec.repl.util.ReplUtils;
@@ -202,7 +203,7 @@ public class ReplCopyTask extends Task<ReplCopyWork> implements Serializable {
       // TODO : verify if skipping charset here is okay
 
       String line;
-      while ((line = br.readLine()) != null) {
+      while ((line = BoundedLineReader.readLine(br, 5_000_000)) != null) {
         LOG.debug("ReplCopyTask :_filesReadLine: {}", line);
 
         String[] fragments = ReplChangeManager.decodeFileUri(line);

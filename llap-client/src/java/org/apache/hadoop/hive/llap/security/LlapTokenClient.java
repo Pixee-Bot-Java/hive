@@ -18,6 +18,8 @@
 
 package org.apache.hadoop.hive.llap.security;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.URL;
@@ -162,7 +164,7 @@ public class LlapTokenClient {
     String currentUser = UserGroupInformation.getCurrentUser().getShortUserName();
     UserGroupInformation ugi = UserGroupInformation.createRemoteUser(currentUser);
 
-    String address = new URL(clientInstance.getServicesAddress()).getHost();
+    String address = Urls.create(clientInstance.getServicesAddress(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).getHost();
     int port = clientInstance.getManagementPort();
 
     InetSocketAddress socketAddr = NetUtils.createSocketAddrForHost(address, port);

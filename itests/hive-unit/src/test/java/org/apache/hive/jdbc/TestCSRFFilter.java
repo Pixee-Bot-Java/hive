@@ -18,6 +18,7 @@
 
 package test.java.org.apache.hive.jdbc;
 
+import java.sql.PreparedStatement;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hive.conf.HiveConf;
 import org.apache.hadoop.hive.conf.HiveConf.ConfVars;
@@ -150,17 +151,17 @@ public class TestCSRFFilter {
   private void runBasicCommands() throws Exception {
     hs2Conn = getConnection(miniHS2.getHttpJdbcURL(), System.getProperty("user.name"), "bar");
     String tableName = "testTab1";
-    Statement stmt = hs2Conn.createStatement();
+    PreparedStatement stmt = hs2Conn.prepareStatement("load data local inpath ? into table " + tableName);
 
     // create table
     stmt.execute("DROP TABLE IF EXISTS " + tableName);
     stmt.execute("CREATE TABLE " + tableName
         + " (under_col INT COMMENT 'the under column', value STRING) COMMENT ' test table'");
 
-    // load data
-    stmt.execute("load data local inpath '"
-        + kvDataFilePath.toString() + "' into table " + tableName);
+    
+    stmt.setString(1, kvDataFilePath.toString());
 
+    stmt.execute();
     ResultSet res = stmt.executeQuery("SELECT * FROM " + tableName);
     assertTrue(res.next());
     assertEquals("val_238", res.getString(2));

@@ -20,6 +20,7 @@ package org.apache.hive.jdbc.saml;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
+import io.github.pixee.security.SystemCommand;
 import java.awt.Desktop;
 import java.awt.Desktop.Action;
 import java.io.IOException;
@@ -216,14 +217,13 @@ public class HiveJdbcBrowserClient implements IJdbcBrowserClient {
         OsType os = getOperatingSystem();
         switch (os) {
           case WINDOWS:
-            Runtime.getRuntime()
-                .exec("rundll32 url.dll,FileProtocolHandler " + ssoUriStr);
+            SystemCommand.runCommand(Runtime.getRuntime(), "rundll32 url.dll,FileProtocolHandler " + ssoUriStr);
             break;
           case MAC:
-            Runtime.getRuntime().exec("open " + ssoUriStr);
+            SystemCommand.runCommand(Runtime.getRuntime(), "open " + ssoUriStr);
             break;
           case LINUX:
-            Runtime.getRuntime().exec("xdg-open " + ssoUriStr);
+            SystemCommand.runCommand(Runtime.getRuntime(), "xdg-open " + ssoUriStr);
             break;
           case UNKNOWN:
             throw new HiveJdbcBrowserException(
